@@ -2,6 +2,15 @@
 
 Osrednji del moje projektne naloge bo implementacija $\underline{\text{nedeterminističnega skladovnega avtomata}}$ (non-deterministic pushdown automaton oz. NPDA). 
 
+## Neformalni opis
+
+
+Za rezliko od standardnega končnega avtomata ima, kot je razvidno iz imena, skladovni avtomat (pushdown automaton oz. PDA) pridružen še sklad. 
+
+Skladovni avtomat lahko sprejme niz, ki ga bere od leve proti desni. V vsakem koraku lahko prebere le en znak in se nato na podlagi tega znaka, trenutnega stanja in vrhnjega elementa sklada odloči, kakšen prehod naj izvede. V procesu izvajanja prehoda se lahko zgodi več stvari. Avtomat lahko vzame vrhnji element dol s sklada (pop) in nato na sklad položi (push) končno množico znakov iz abecede sklada.
+
+V primeru, da je v neki situaciji možnih več prehodov, govorimo o nedeterminističnem avtomatu. Take avtomate bomo v nadaljevanju bolje spoznali in se, upajmo, z njimi spoprijateljili.
+
 ## Definicija
 
 Formalno gledano je nedeterminističen skladovni avtomat definiran kot nabor (7-tuple) $(Q, \Sigma, \Gamma,\delta, q_0, Z_0, F )$, kjer so:
@@ -47,11 +56,11 @@ V primeru ko je $A_{1}A_{2}\ldots A_{n}$ enako $\varepsilon$ se $A$ odstrani iz 
 
 Obstajata dva ekvivalentna načina sprejemanja za nedeterministične skladovne avtomate.
 
-Prvi način je sprejemanje glede na končno stanje. Niz $w$ je sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do enega izmed sprejemnih stanj, pri čemer se ne ozremo na končno stanje sklada (ta je lahko prazen ali pa ne).
+Prvi način je sprejemanje glede na končno stanje. Niz $w$ je sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do enega izmed sprejemnih stanj, pri čemer se ne ozremo na končno stanje sklada (ta je lahko prazen ali pa ne). Ta način bo uporabljen v zgledih.
 
-Drugi način je sprejemanje s praznim skladom. Tu je niz $w$ sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do katerega koli stanja, a je po končanem branju sklad prezen.
+Drugi način je sprejemanje s praznim skladom. Tu je niz $w$ sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do katerega koli stanja, a je po končanem branju sklad prezen. Taki avtomati tudi ne potrebujejo $F$ v definiciji.
 
-Naj bo $P$ = $(Q, \Sigma, \Gamma,\delta, q_0, Z_0, F )$. Označimo z $L(M)$ vse nize, ki jih $P$ sprejme glede na končno stanje in z $N(P)$ množico nizov, ki jih $P$ sprejme glede na prazen sklad. 
+Naj bo $P$ = $(Q, \Sigma, \Gamma,\delta, q_0, Z_0, F )$. Označimo z $L(M)$ vse nize, ki jih $P$ sprejme glede na končno stanje in z $N(P)$ množico nizov, ki jih $P$ sprejme glede na prazen sklad.
 
 Zavedati se je potrebno, da v splošnem ne velja enakost $L(P) = N(P)$.
 
@@ -59,19 +68,77 @@ Ta načina sprejemanja sta ekvivalentna v smislu, da za vsak NPDA $P$ obstaja NP
 
 ### Povezava s Context-Free Languages
 
-Vema da končni avtomati sprejemajo natanko regularne jezike (Regular Languages). To še zdaleč niso vsi jeziki. Primer jezika, ki ni regularen je $\{a^{i}b^{i} | i \in \mathbb{N}\}$.
+Vemo da končni avtomati sprejemajo natanko regularne jezike (Regular Languages). To še zdaleč niso vsi jeziki. Primer jezika, ki ni regularen je $\{a^{i}b^{i} | i \in \mathbb{N}\}$.
 
 Izkaže se, da nedeterministični skladovni avtomati sprejemajo natanko vse Context-Free jazike (regularni jeziki so podmnožica le teh), deterministični skladovni avtomati pa sprejemajo več jezikov, kot le regularne, a hkrati manj kot vse Context-Free jezike.
 
 Seveda obstajajo Non-Context-Free jeziki, kot je npr. jezik vseh nizov oblike $\{a^{i}b^{j}c^{k} | 0\leq i\leq j\leq k\}$.
 
+## Primerjava s končnimi avtomati
 
-## Opredelitev in primerjava s končnimi avtomati
+Dve glavni razliki med končnimi in skladovnimi avtomati izhajata ravno iz sklada.
 
-Za rezliko od standardnega končnega avtomata ima, kot je razvidno iz imena, skladovni avtomat (pushdown automaton oz. PDA) pridružen še sklad. Dve glavni razliki med končnimi in skladovnimi avtomati izhajata ravno iz sklada.
-Prva razlika se nanaša na uporabo sklada pri prehajanju v nova stanja. Medtem ko končni avtomat pogleda le trenutno stanje in trenutni simbol, ima PDA na voljo še informacijo o vrhnjem elementu sklada. Druga razlika pa se skriva v zmožnosti avtomata da uredi sklad kot del prehoda v novo stanje.
+Prva razlika se nanaša na uporabo sklada pri prehajanju v nova stanja. Medtem ko končni avtomat pogleda le trenutno stanje in trenutni simbol, ima PDA na voljo še informacijo o vrhnjem elementu sklada. 
 
-Kot nam je že znano skladovni avtomat lahko sprejme niz, ki ga bere od leve proti desni. V vsakem koraku lahko prebere le en znak in se nato na podlagi tega znaka, trenutnega stanja in vrhnjega elementa sklada odloči, kakšen prehod naj izvede. V procesu izvajanja prehoda se lahko zgodi več stvari. Avtomat lahko vzame vrhnji element dol s sklada (pop) in nato na sklad položi (push) končno množico znakov iz abecede sklada.
+Druga razlika se skriva v zmožnosti avtomata da uredi sklad kot del prehoda v novo stanje. 
 
-V primeru, da je v neki situaciji možnih več prehodov, govorimo o nedeterminističnem avtomatu. Take avtomate bomo v nadaljevanju bolje spoznali in se, upajmo, z njimi spoprijateljili.
+Ravno ti dve razliki povečata število jezikov, ki jih nedeterministični skladovni avtomati sprejemajo, in jih naredita zanimive za raziskovanje.
+
+## Zgled 1
+
+Za prvi primer sem si izbral kar najbolj osnoven in ilustrativen zgled, ki se pojavi v vsakem tekstu na temo avtomatov in jezikov. Skupaj bomo sestavili avtomat, ki sprejme jezik $\{0^{n}1^{n}|n \geq 0\}$. To je jezik, ki ga sprejme deterministični PDA, a se mi zdi pomemben za razumevanje delovanja skalda.
+
+Naj bo $M_1 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
+
+- $Q=\{q_1, q_2, q_3, q_4\},$
+- $\Sigma = \{0,1\},$
+- $\Gamma = \{0,\$\},$
+- $F = \{q_1, q_4\}$,
+
+|$\delta$|
+|----|
+|$(q_1, 0, \$) \to (q_2, 0\$)$|
+|$(q_2, 0, 0) \to (q_2, 00)$|
+|$(q_2, 1, 0) \to (q_3, \varepsilon)$|
+|$(q_3, 1, 0) \to (q_3, \varepsilon)$|
+|$(q_3, 1, \$) \to (q_4, \varepsilon)$|
+
+<!-- Sipser 113 -->
+
+## Zgled 2
+
+Drugi primer, pa je jezik, ki ga ne sprejme noben DPDA, ga pa sprejme naslednji NDPA.
+Sestavili bomo avtomat, ki sprejme jezik $\{a^{i}b^{j}c^{k} | i=j \text{  ali  } i=k\}$.
+
+Naj bo $M_2 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
+
+- $Q=\{q_1, q_2, q_3, q_4, q_5, q_6, q_7\},$
+- $\Sigma = \{a, b, c\},$
+- $\Gamma = \{a,b,\$\},$
+- $F = \{q_4, q_7\}$,
+
+|$\delta$|
+|----|
+|$(q_1, \varepsilon, \$) \to (q_2,\$)$|
+|$(q_2, a, \$) \to (q_2, a\$)$|
+|$(q_2, a, a) \to (q_2, aa)$|
+|$(q_2, \varepsilon, a) \to (q_3, a)$|
+|$(q_2, \varepsilon, \$) \to (q_3, \$)$|
+|$(q_3, b, a) \to (q_3, \varepsilon)$|
+|$(q_3, \varepsilon, \$) \to (q_4, \$)$|
+|$(q_4, c, \$) \to (q_4, \$)$|
+|$(q_2, \varepsilon, a) \to (q_5, a)$|
+|$(q_2, \varepsilon, \$) \to (q_5, \$)$|
+|$(q_5, b, a) \to (q_5, a)$|
+|$(q_5, b, \$) \to (q_5,\$)$|
+|$(q_5, \varepsilon, a) \to (q_6, a)$|
+|$(q_5, \varepsilon, \$) \to (q_6, \$)$|
+|$(q_6, c, a) \to (q_6, \varepsilon)$|
+|$(q_6, \varepsilon, \$) \to (q_7, \$)$|
+
+<!-- Sipser 114 -->
+
+## Struktura datotek
+
+
 
