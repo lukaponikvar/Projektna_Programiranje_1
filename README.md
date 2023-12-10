@@ -97,11 +97,11 @@ Naj bo $M_1 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
 
 |$\delta$|
 |----|
-|$(q_1, 0, \$) \to (q_2, 0\$)$|
+|$(q_1, 0, {\$}) \to (q_2, 0{\$})$|
 |$(q_2, 0, 0) \to (q_2, 00)$|
 |$(q_2, 1, 0) \to (q_3, \varepsilon)$|
 |$(q_3, 1, 0) \to (q_3, \varepsilon)$|
-|$(q_3, 1, \$) \to (q_4, \varepsilon)$|
+|$(q_3, 1, {\$}) \to (q_4, \varepsilon)$|
 
 <!-- Sipser 113 -->
 
@@ -119,22 +119,22 @@ Naj bo $M_2 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
 
 |$\delta$|
 |----|
-|$(q_1, \varepsilon, \$) \to (q_2,\$)$|
-|$(q_2, a, \$) \to (q_2, a\$)$|
+|$(q_1, \varepsilon, {\$}) \to (q_2,{\$})$|
+|$(q_2, a, {\$}) \to (q_2, a{\$})$|
 |$(q_2, a, a) \to (q_2, aa)$|
 |$(q_2, \varepsilon, a) \to (q_3, a)$|
-|$(q_2, \varepsilon, \$) \to (q_3, \$)$|
+|$(q_2, \varepsilon, {\$}) \to (q_3, {\$})$|
 |$(q_3, b, a) \to (q_3, \varepsilon)$|
-|$(q_3, \varepsilon, \$) \to (q_4, \$)$|
-|$(q_4, c, \$) \to (q_4, \$)$|
+|$(q_3, \varepsilon, {\$}) \to (q_4, {\$})$|
+|$(q_4, c, {\$}) \to (q_4, {\$})$|
 |$(q_2, \varepsilon, a) \to (q_5, a)$|
-|$(q_2, \varepsilon, \$) \to (q_5, \$)$|
+|$(q_2, \varepsilon, {\$}) \to (q_5, {\$})$|
 |$(q_5, b, a) \to (q_5, a)$|
-|$(q_5, b, \$) \to (q_5,\$)$|
+|$(q_5, b, {\$}) \to (q_5,{\$})$|
 |$(q_5, \varepsilon, a) \to (q_6, a)$|
-|$(q_5, \varepsilon, \$) \to (q_6, \$)$|
+|$(q_5, \varepsilon, {\$}) \to (q_6, {\$})$|
 |$(q_6, c, a) \to (q_6, \varepsilon)$|
-|$(q_6, \varepsilon, \$) \to (q_7, \$)$|
+|$(q_6, \varepsilon, {\$}) \to (q_7, {\$})$|
 
 <!-- Sipser 114 -->
 
