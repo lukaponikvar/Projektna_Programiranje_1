@@ -9,13 +9,13 @@ type t = {
   sklad : sklad;
 }
 
-let prazen_avtomat zacetno_stanje =
+let prazen_avtomat zacetno_stanje zacetni_simbol_na_skladu =
   {
     stanja = [ zacetno_stanje ];
     zacetno_stanje;
     sprejemna_stanja = [];
     prehodi = [];
-    sklad = Prazen;
+    sklad = Sklad (zacetni_simbol_na_skladu, Prazen) ;
   }
 
 let dodaj_nesprejemno_stanje stanje avtomat =
@@ -66,4 +66,15 @@ let preberi_niz avtomat stanje sklad niz =
   |> dodaj_prehod q0 '1' q1 |> dodaj_prehod q1 '1' q2 |> dodaj_prehod q2 '1' q0 *)
 
 let primer =
-  let 
+  let q1 = Stanje.iz_niza "q1"
+  and q2 = Stanje.iz_niza "q2"
+  and q3 = Stanje.iz_niza "q3"
+  and q4 = Stanje.iz_niza "q4" in
+  prazen_avtomat q1 'L' |> dodaj_nesprejemno_stanje q2
+  |> dodaj_nesprejemno_stanje q3
+  |> dodaj_sprejemno_stanje q4
+  |> dodaj_prehod q1 (Sklad ('L', Prazen)) '0' q2 (Sklad ('0', Prazen))
+  |> dodaj_prehod q2 (Sklad ('0', x)) '0' q2 (Sklad ('0', (Sklad ('0', x))))
+  |> dodaj_prehod q2 (Sklad ('0', x)) '1' q3 x
+  |> dodaj_prehod q3 (Sklad ('0', x)) '1' q3 x
+  |> dodaj_prehod q3 (Sklad ('L', Prazen)) '1' q4 Prazen
