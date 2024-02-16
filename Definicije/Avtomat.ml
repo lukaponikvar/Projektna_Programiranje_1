@@ -48,6 +48,13 @@ let sklad avtomat = avtomat.sklad
   
 let je_sprejemno_stanje avtomat stanje =
   List.mem stanje avtomat.sprejemna_stanja
+
+let preberi_niz avtomat stanje sklad niz =
+  let aux acc znak =
+    match acc with None -> None | Some (stanje', sklad') -> prehodna_funkcija avtomat stanje' sklad' znak
+  in
+  niz |> String.to_seq |> Seq.fold_left aux (Some (stanje, sklad))
+
   
 (* let enke_1mod3 =
   let q0 = Stanje.iz_niza "q0"
@@ -58,9 +65,5 @@ let je_sprejemno_stanje avtomat stanje =
   |> dodaj_prehod q0 '0' q0 |> dodaj_prehod q1 '0' q1 |> dodaj_prehod q2 '0' q2
   |> dodaj_prehod q0 '1' q1 |> dodaj_prehod q1 '1' q2 |> dodaj_prehod q2 '1' q0 *)
 
-let preberi_niz avtomat stanje niz =
-  let aux acc znak =
-    match acc with None -> None | Some stanje -> prehodna_funkcija avtomat stanje znak
-  in
-  niz |> String.to_seq |> Seq.fold_left aux (Some q)
-  
+let primer =
+  let 
