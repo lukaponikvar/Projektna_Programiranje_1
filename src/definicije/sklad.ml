@@ -1,5 +1,6 @@
 type t = Prazen | Sestavljen of int * t
 
+let prazen_sklad = Prazen
 let trenutni_znak = function
   | Prazen -> None
   | Sestavljen (znak, _) -> Some znak

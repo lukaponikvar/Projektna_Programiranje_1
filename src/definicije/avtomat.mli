@@ -1,6 +1,6 @@
 type t
 
-val prazen_avtomat : Stanje.t -> t
+val prazen_avtomat : Stanje.t -> Sklad.t -> t
 val dodaj_nesprejemno_stanje : Stanje.t -> t -> t
 val dodaj_sprejemno_stanje : Stanje.t -> t -> t
 val dodaj_prehod : Stanje.t -> char -> Stanje.t -> t -> t

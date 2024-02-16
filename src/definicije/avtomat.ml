@@ -1,18 +1,21 @@
 type stanje = Stanje.t
+type sklad = Sklad.t
 
 type t = {
   stanja : stanje list;
   zacetno_stanje : stanje;
   sprejemna_stanja : stanje list;
   prehodi : (stanje * char * stanje) list;
+  sklad : sklad;
 }
 
-let prazen_avtomat zacetno_stanje =
+let prazen_avtomat zacetno_stanje sklad =
   {
     stanja = [ zacetno_stanje ];
     zacetno_stanje;
     sprejemna_stanja = [];
     prehodi = [];
+    sklad = sklad;
   }
 
 let dodaj_nesprejemno_stanje stanje avtomat =
@@ -48,7 +51,8 @@ let enke_1mod3 =
   let q0 = Stanje.iz_niza "q0"
   and q1 = Stanje.iz_niza "q1"
   and q2 = Stanje.iz_niza "q2" in
-  prazen_avtomat q0 |> dodaj_sprejemno_stanje q1
+  prazen_avtomat q0 Sklad.prazen_sklad
+  |> dodaj_sprejemno_stanje q1
   |> dodaj_nesprejemno_stanje q2
   |> dodaj_prehod q0 '0' q0 |> dodaj_prehod q1 '0' q1 |> dodaj_prehod q2 '0' q2
   |> dodaj_prehod q0 '1' q1 |> dodaj_prehod q1 '1' q2 |> dodaj_prehod q2 '1' q0
