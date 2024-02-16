@@ -86,7 +86,7 @@ Ravno ti dve razliki povečata število jezikov, ki jih nedeterministični sklad
 
 ## Zgled 1
 
-Za prvi primer sem si izbral kar najbolj osnoven in ilustrativen zgled, ki se pojavi v vsakem tekstu na temo avtomatov in jezikov. Skupaj bomo sestavili avtomat, ki sprejme jezik $\{0^{n}1^{n}|n \geq 0\}$. To je jezik, ki ga sprejme deterministični PDA, a se mi zdi pomemben za razumevanje delovanja skalda.
+Za prvi primer sem si izbral kar najbolj osnoven in ilustrativen zgled, ki se pojavi v vsakem tekstu na temo avtomatov in jezikov. Skupaj bomo sestavili avtomat, ki sprejme jezik $\{0^{n}1^{n}|n \geq 0\}$. To je jezik, ki ga sprejme deterministični PDA, a se mi zdi pomemben za razumevanje delovanja sklada.
 
 Naj bo $M_1 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
 
