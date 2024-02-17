@@ -6,6 +6,7 @@ type t = {
   zacetno_stanje : stanje;
   sprejemna_stanja : stanje list;
   prehodi : ( stanje * int * char * stanje * int ) list;
+  prazni_prehodi : (stanje * int * stanje * int) list;
   sklad : sklad;
 }
 
@@ -15,6 +16,7 @@ let prazen_avtomat zacetno_stanje sklad =
     zacetno_stanje;
     sprejemna_stanja = [];
     prehodi = [];
+    prazni_prehodi = [];
     sklad = sklad;
   }
 
@@ -31,14 +33,25 @@ let dodaj_sprejemno_stanje stanje avtomat =
 let dodaj_prehod stanje1 znak_na_skladu1 znak stanje2 znak_na_skladu2 avtomat =
   { avtomat with prehodi = (stanje1, znak_na_skladu1, znak, stanje2, znak_na_skladu2) :: avtomat.prehodi }
 
+let dodaj_prazen_prehod stanje1 znak_na_skladu1 stanje2 znak_na_skladu2 avtomat =
+  { avtomat with prazni_prehodi = (stanje1, znak_na_skladu1, stanje2, znak_na_skladu2) :: avtomat.prazni_prehodi }
+
 let prehodna_funkcija avtomat stanje znak_na_skladu znak =
   match
     List.find_opt
       (fun (stanje1, znak_na_skladu1, znak', _stanje2, _znak_na_skladu2) -> stanje1 = stanje && znak = znak' && znak_na_skladu1 = znak_na_skladu)
       avtomat.prehodi
   with
-  | None -> None
   | Some (_, _, _, stanje2, _) -> Some stanje2
+  | None -> (
+    match
+    List.find_opt
+      (fun (stanje1, znak_na_skladu1, _stanje2, _znak_na_skladu2) -> stanje1 = stanje && znak_na_skladu1 = znak_na_skladu)
+      avtomat.prazni_prehodi
+  with
+  | Some (_, _, stanje2, _) -> Some stanje2
+  | None -> None
+  )
 
 let prehodna_funkcija_za_sklad avtomat stanje znak_na_skladu znak =
   match
@@ -46,12 +59,21 @@ let prehodna_funkcija_za_sklad avtomat stanje znak_na_skladu znak =
       (fun (stanje1, znak_na_skladu1, znak', _stanje2, _znak_na_skladu2) -> stanje1 = stanje && znak = znak' && znak_na_skladu1 = znak_na_skladu)
       avtomat.prehodi
   with
-  | None -> 99
   | Some (_, _, _, _, znak_na_skladu2) -> znak_na_skladu2
+  | None -> (
+    match
+    List.find_opt
+      (fun (stanje1, znak_na_skladu1, _stanje2, _znak_na_skladu2) -> stanje1 = stanje && znak_na_skladu1 = znak_na_skladu)
+      avtomat.prazni_prehodi
+  with
+  | Some (_, _, _, znak_na_skladu2) -> znak_na_skladu2
+  | None -> 99
+  )
   
 let zacetno_stanje avtomat = avtomat.zacetno_stanje
 let seznam_stanj avtomat = avtomat.stanja
 let seznam_prehodov avtomat = avtomat.prehodi
+let seznam_praznih_prehodov avtomat = avtomat.prazni_prehodi
 let sklad avtomat = avtomat.sklad
 
 let je_sprejemno_stanje avtomat stanje =
@@ -70,6 +92,20 @@ let enke_1mod3 =
   |> dodaj_prehod q0 2 '1' q1 2
   |> dodaj_prehod q1 2 '1' q2 2
   |> dodaj_prehod q2 2 '1' q0 2
+
+(* let enke_1mod3 =
+  let q0 = Stanje.iz_niza "q0"
+  and q1 = Stanje.iz_niza "q1"
+  and q2 = Stanje.iz_niza "q2" in
+  prazen_avtomat q0 (Sklad.nov_sklad 2)
+  |> dodaj_sprejemno_stanje q1
+  |> dodaj_nesprejemno_stanje q2
+  |> dodaj_prehod q0 2 '0' q0 2
+  |> dodaj_prehod q1 2 '0' q1 2
+  |> dodaj_prehod q2 2 '0' q2 2
+  |> dodaj_prehod q0 2 '1' q1 2
+  |> dodaj_prehod q1 2 '1' q2 2
+  |> dodaj_prehod q2 2 '1' q0 2 *)
 
 let preberi_niz avtomat stanje sklad niz =
   let aux acc znak =
