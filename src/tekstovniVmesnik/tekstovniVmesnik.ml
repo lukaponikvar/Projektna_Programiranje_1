@@ -9,29 +9,31 @@ type stanje_vmesnika =
   | OpozoriloONapacnemNizu
 
 type model = {
-  avtomat : t;
+  avtomat : Avtomat.t;
   stanje_avtomata : Stanje.t;
+  stanje_sklada : Sklad.t;
   stanje_vmesnika : stanje_vmesnika;
 }
 
 type msg = PreberiNiz of string | ZamenjajVmesnik of stanje_vmesnika
 
-let preberi_niz avtomat q niz =
+(* let preberi_niz avtomat stanje niz =
   let aux acc znak =
     match acc with
     | None -> None
-    | Some q -> Avtomat.prehodna_funkcija avtomat q znak
+    | Some stanje -> Avtomat.prehodna_funkcija avtomat q znak
   in
-  niz |> String.to_seq |> Seq.fold_left aux (Some q)
+  niz |> String.to_seq |> Seq.fold_left aux (Some q) *)
 
 let update model = function
   | PreberiNiz str -> (
-      match preberi_niz model.avtomat model.stanje_avtomata str with
+      match Avtomat.preberi_niz model.avtomat model.stanje_avtomata model.stanje_sklada str with
       | None -> { model with stanje_vmesnika = OpozoriloONapacnemNizu }
-      | Some stanje_avtomata ->
+      | Some (stanje_avtomata, stanje_sklada) ->
           {
             model with
             stanje_avtomata;
+            stanje_sklada;
             stanje_vmesnika = RezultatPrebranegaNiza;
           })
   | ZamenjajVmesnik stanje_vmesnika -> { model with stanje_vmesnika }
@@ -51,7 +53,7 @@ let izpisi_avtomat avtomat =
   let izpisi_stanje stanje =
     let prikaz = Stanje.v_niz stanje in
     let prikaz =
-      if stanje = zacetno_stanje avtomat then "-> " ^ prikaz else prikaz
+      if stanje = zacetno_stanje avtomat then "-> " ^ prikaz else "   " ^ prikaz
     in
     let prikaz =
       if je_sprejemno_stanje avtomat stanje then prikaz ^ " +" else prikaz
@@ -88,6 +90,7 @@ let init avtomat =
   {
     avtomat;
     stanje_avtomata = zacetno_stanje avtomat;
+    stanje_sklada = sklad avtomat;
     stanje_vmesnika = SeznamMoznosti;
   }
 

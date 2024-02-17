@@ -46,6 +46,7 @@ let prehodna_funkcija_za_sklad avtomat stanje znak_na_skladu znak =
       (fun (stanje1, znak_na_skladu1, znak', _stanje2, _znak_na_skladu2) -> stanje1 = stanje && znak = znak' && znak_na_skladu1 = znak_na_skladu)
       avtomat.prehodi
   with
+  | None -> 99
   | Some (_, _, _, _, znak_na_skladu2) -> znak_na_skladu2
   
 let zacetno_stanje avtomat = avtomat.zacetno_stanje
