@@ -73,9 +73,11 @@ let enke_1mod3 =
 
 let preberi_niz avtomat stanje sklad niz =
   let aux acc znak =
-    match acc with None -> None | Some (stanje', sklad') ->  let x = (prehodna_funkcija avtomat stanje' (Option.get (Sklad.trenutni_znak sklad')) znak) in (match x with
-    | None -> None
-    | Some y -> let z = (prehodna_funkcija_za_sklad avtomat stanje' (Option.get (Sklad.trenutni_znak sklad')) znak) in 
-    Some (y, Sklad.push z (Option.get (Sklad.pop sklad'))) )
+    match acc with None -> None | Some (stanje', sklad') -> let trenutni_znak_na_skladu = (Option.get (Sklad.trenutni_znak sklad')) in
+      let mozno_novo_stanje = (prehodna_funkcija avtomat stanje' trenutni_znak_na_skladu znak) in 
+      (match mozno_novo_stanje with
+        | None -> None
+        | Some novo_stanje -> let vnos_na_sklad = (prehodna_funkcija_za_sklad avtomat stanje' trenutni_znak_na_skladu znak) in 
+          Some (novo_stanje, Sklad.zamenjaj_na_skladu vnos_na_sklad sklad') )
   in
   niz |> String.to_seq |> Seq.fold_left aux (Some (stanje, sklad))
