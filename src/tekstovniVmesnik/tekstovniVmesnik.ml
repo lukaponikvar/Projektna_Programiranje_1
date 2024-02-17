@@ -60,7 +60,7 @@ let izpisi_avtomat avtomat =
     in
     print_endline prikaz
   in
-  List.iter izpisi_stanje (seznam_stanj avtomat)
+  List.iter izpisi_stanje (List.rev (seznam_stanj avtomat))
 
 let beri_niz _model =
   print_string "Vnesi niz > ";
@@ -99,4 +99,4 @@ let rec loop model =
   let model' = update model msg in
   loop model'
 
-let _ = loop (init enke_1mod3)
+let _ = loop (init dpda_enako_stevilo_nicel_in_enk)
