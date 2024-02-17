@@ -4,4 +4,4 @@ val trenutni_znak : t -> int option
 val je_na_koncu : t -> bool
 val pop : t -> t option
 val push : int -> t -> t
-val prazen_sklad : t
+val nov_sklad : int -> t
