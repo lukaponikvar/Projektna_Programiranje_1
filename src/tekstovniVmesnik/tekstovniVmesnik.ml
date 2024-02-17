@@ -18,14 +18,6 @@ type model = {
 
 type msg = PreberiNiz of string | ZamenjajVmesnik of stanje_vmesnika
 
-(* let preberi_niz avtomat stanje niz =
-  let aux acc znak =
-    match acc with
-    | None -> None
-    | Some stanje -> Avtomat.prehodna_funkcija avtomat q znak
-  in
-  niz |> String.to_seq |> Seq.fold_left aux (Some q) *)
-
 let update model = function
   | PreberiNiz str ->
      (let seznam = Avtomat.preberi_niz model.avtomat model.stanje_avtomata model.stanje_sklada str in
@@ -71,7 +63,9 @@ let izpisi_avtomat avtomat =
     in
     print_endline prikaz
   in
-  List.iter izpisi_stanje (List.rev (seznam_stanj avtomat))
+  print_endline "Avtomat ima naslednjo strukturo:\n- Začetno stanje: ->\n- Sprejemno stanje: + \n___________";
+  List.iter izpisi_stanje (List.rev (seznam_stanj avtomat));
+  print_endline "___________\n "
 
 let beri_niz _model =
   print_string "Vnesi niz > ";
