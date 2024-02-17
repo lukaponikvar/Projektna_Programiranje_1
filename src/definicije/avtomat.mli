@@ -5,10 +5,8 @@ val dodaj_nesprejemno_stanje : Stanje.t -> t -> t
 val dodaj_sprejemno_stanje : Stanje.t -> t -> t
 val dodaj_prehod : Stanje.t -> int -> char -> Stanje.t -> int list -> t -> t
 val dodaj_prazen_prehod : Stanje.t -> int -> Stanje.t -> int list -> t -> t
-val prehodna_funkcija : t -> Stanje.t -> int -> char -> (Stanje.t) option
-val prehodna_funkcija_brez_znaka : t -> Stanje.t -> int -> (Stanje.t) option
-val prehodna_funkcija_za_sklad : t -> Stanje.t -> int -> char -> int list
-val prehodna_funkcija_za_sklad_brez_znaka : t -> Stanje.t -> int -> int list
+val prehodna_funkcija : t -> char -> (Stanje.t * Sklad.t) -> (Stanje.t * Sklad.t) list
+val prazna_prehodna_funkcija : t -> (Stanje.t * Sklad.t) -> (Stanje.t * Sklad.t) list
 val zacetno_stanje : t -> Stanje.t
 val seznam_stanj : t -> Stanje.t list
 val seznam_prehodov : t -> (Stanje.t * int * char * Stanje.t * int list ) list
@@ -18,4 +16,5 @@ val zacetni_sklad : t -> Sklad.t
 val je_sprejemno_stanje : t -> Stanje.t -> bool
 val enke_1mod3 : t
 val dpda_enako_stevilo_nicel_in_enk : t
-val preberi_niz : t -> Stanje.t -> Sklad.t -> string -> (Stanje.t * Sklad.t) option
+val npda_enako_stevilo_nicel_kot_enk_ali_dvojk : t
+val preberi_niz : t -> Stanje.t -> Sklad.t -> string -> (Stanje.t * Sklad.t) list

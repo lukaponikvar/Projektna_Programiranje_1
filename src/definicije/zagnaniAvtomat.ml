@@ -9,7 +9,7 @@ let stanje { stanje; _ } = stanje
 
 let sklad {sklad; _ } = sklad
 
-let korak_naprej { avtomat; trak; stanje; sklad } =
+(* let korak_naprej { avtomat; trak; stanje; sklad } =
   if Trak.je_na_koncu trak then None
   else
     let stanje' =
@@ -18,7 +18,7 @@ let korak_naprej { avtomat; trak; stanje; sklad } =
     match stanje' with
     | None -> None
     | Some stanje' -> let novi_del_sklada = Avtomat.prehodna_funkcija_za_sklad avtomat stanje (Option.get (Sklad.trenutni_znak sklad)) (Trak.trenutni_znak trak) in
-        Some { avtomat; trak = Trak.premakni_naprej trak; stanje = stanje' ; sklad = Sklad.zamenjaj_na_skladu novi_del_sklada sklad}
+        Some { avtomat; trak = Trak.premakni_naprej trak; stanje = stanje' ; sklad = Sklad.zamenjaj_na_skladu novi_del_sklada sklad} *)
 
 let je_v_sprejemnem_stanju { avtomat; stanje; _ } =
   Avtomat.je_sprejemno_stanje avtomat stanje

@@ -27,11 +27,20 @@ type msg = PreberiNiz of string | ZamenjajVmesnik of stanje_vmesnika
   niz |> String.to_seq |> Seq.fold_left aux (Some q) *)
 
 let update model = function
-  | PreberiNiz str -> (
-      match Avtomat.preberi_niz model.avtomat model.stanje_avtomata model.stanje_sklada str with
-      | None -> { model with stanje_vmesnika = OpozoriloONapacnemNizu }
-      | Some (stanje_avtomata, stanje_sklada) ->
+  | PreberiNiz str ->
+     (let seznam = Avtomat.preberi_niz model.avtomat model.stanje_avtomata model.stanje_sklada str in
+     let seznamcek = List.filter (fun (stanje', _) -> (je_sprejemno_stanje model.avtomat stanje')) seznam in
+      match (seznam, seznamcek) with
+      | [], _ -> { model with stanje_vmesnika = OpozoriloONapacnemNizu }
+      | ((stanje_avtomata, stanje_sklada) :: _, []) ->
           {
+            model with
+            stanje_avtomata;
+            stanje_sklada;
+            stanje_vmesnika = RezultatPrebranegaNiza;
+          }
+      | (_, (stanje_avtomata, stanje_sklada) :: _) -> 
+            {
             model with
             stanje_avtomata;
             stanje_sklada;
@@ -103,4 +112,4 @@ let rec loop model =
   let model' = update model msg in
   loop model'
 
-let _ = loop (init dpda_enako_stevilo_nicel_in_enk)
+let _ = loop (init npda_enako_stevilo_nicel_kot_enk_ali_dvojk)
