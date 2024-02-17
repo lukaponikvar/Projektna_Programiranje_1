@@ -38,23 +38,6 @@ let dodaj_prehod stanje1 znak_na_skladu1 znak stanje2 (znaki_na_skladu2 : int li
 let dodaj_prazen_prehod stanje1 znak_na_skladu1 stanje2 (znaki_na_skladu2 : int list) avtomat =
   { avtomat with prazni_prehodi = (stanje1, znak_na_skladu1, stanje2, znaki_na_skladu2) :: avtomat.prazni_prehodi }
 
-(* let prehodna_funkcija avtomat stanje znak_na_skladu znak =
-  match
-    List.find_opt
-      (fun (stanje1, znak_na_skladu1, znak', _stanje2, _znaki_na_skladu2) -> stanje1 = stanje && znak = znak' && znak_na_skladu1 = znak_na_skladu)
-      avtomat.prehodi
-  with
-  | Some (_, _, _, stanje2, _) -> Some stanje2
-  | None -> (
-    match
-    List.find_opt
-      (fun (stanje1, znak_na_skladu1, _stanje2, _znaki_na_skladu2) -> stanje1 = stanje && znak_na_skladu1 = znak_na_skladu)
-      avtomat.prazni_prehodi
-  with
-  | Some (_, _, stanje2, _) -> Some stanje2
-  | None -> None
-  ) *)
-
 let prehodna_funkcija avtomat stanje znak_na_skladu znak =
   match
   List.find_opt
@@ -73,22 +56,6 @@ let prehodna_funkcija_brez_znaka avtomat stanje znak_na_skladu =
   | Some (_, _, stanje2, _) -> Some stanje2
   | None -> None
 
-(* let prehodna_funkcija_za_sklad avtomat stanje znak_na_skladu znak =
-  match
-    List.find_opt
-      (fun (stanje1, znak_na_skladu1, znak', _stanje2, _znaki_na_skladu2) -> stanje1 = stanje && znak = znak' && znak_na_skladu1 = znak_na_skladu)
-      avtomat.prehodi
-  with
-  | Some (_, _, _, _, znaki_na_skladu2) -> znaki_na_skladu2
-  | None -> (
-    match
-    List.find_opt
-      (fun (stanje1, znak_na_skladu1, _stanje2, _znaki_na_skladu2) -> stanje1 = stanje && znak_na_skladu1 = znak_na_skladu)
-      avtomat.prazni_prehodi
-  with
-  | Some (_, _, _, znaki_na_skladu2) -> znaki_na_skladu2
-  | None -> []
-  ) *)
 let prehodna_funkcija_za_sklad avtomat stanje znak_na_skladu znak =
   match
     List.find_opt
