@@ -5,11 +5,11 @@ let trenutni_znak = function
   | Prazen -> None
   | Sestavljen (znak, _) -> Some znak
 
-let je_na_koncu sklad = (sklad = Prazen)
+(* let je_na_koncu sklad = (sklad = Prazen) *)
 
-let pop = function
+(* let pop = function
   | Prazen -> None
-  | Sestavljen (_, sklad) -> Some sklad
+  | Sestavljen (_, sklad) -> Some sklad *)
 
 let push sklad vnos = Sestavljen (vnos, sklad)
 
