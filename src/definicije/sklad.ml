@@ -15,7 +15,7 @@ let push vnos sklad = Sestavljen (vnos, sklad)
 
 let zamenjaj_na_skladu vnos = function
   | Prazen -> Prazen
-  | Sestavljen (_, sklad) -> Sestavljen (vnos, sklad)
+  | Sestavljen (_, sklad) -> if (vnos = None) then sklad else (Sestavljen (Option.get vnos, sklad)) 
 
 
 (* let b = Sestavljen (3, Sestavljen (2, Sestavljen (1,Sestavljen (0, Prazen)))) *)

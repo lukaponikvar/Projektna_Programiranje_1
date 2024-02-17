@@ -17,8 +17,8 @@ let korak_naprej { avtomat; trak; stanje; sklad } =
     in
     match stanje' with
     | None -> None
-    | Some stanje' -> let z = Avtomat.prehodna_funkcija_za_sklad avtomat stanje (Option.get (Sklad.trenutni_znak sklad)) (Trak.trenutni_znak trak) in
-        Some { avtomat; trak = Trak.premakni_naprej trak; stanje = stanje' ; sklad = Sklad.push z (Option.get (Sklad.pop sklad))}
+    | Some stanje' -> let novo_stanje = Avtomat.prehodna_funkcija_za_sklad avtomat stanje (Option.get (Sklad.trenutni_znak sklad)) (Trak.trenutni_znak trak) in
+        Some { avtomat; trak = Trak.premakni_naprej trak; stanje = stanje' ; sklad = Sklad.zamenjaj_na_skladu novo_stanje sklad}
 
 let je_v_sprejemnem_stanju { avtomat; stanje; _ } =
   Avtomat.je_sprejemno_stanje avtomat stanje
