@@ -8,6 +8,7 @@ type t = {
   prehodi : ( stanje * int * char * stanje * int list ) list;
   prazni_prehodi : (stanje * int * stanje * int list) list;
   sklad : sklad;
+  zacetni_sklad: sklad;
 }
 
 let prazen_avtomat zacetno_stanje sklad =
@@ -18,6 +19,7 @@ let prazen_avtomat zacetno_stanje sklad =
     prehodi = [];
     prazni_prehodi = [];
     sklad = sklad;
+    zacetni_sklad = sklad;
   }
 
 let dodaj_nesprejemno_stanje stanje avtomat =
@@ -75,11 +77,12 @@ let seznam_stanj avtomat = avtomat.stanja
 let seznam_prehodov avtomat = avtomat.prehodi
 let seznam_praznih_prehodov avtomat = avtomat.prazni_prehodi
 let sklad avtomat = avtomat.sklad
+let zacetni_sklad avtomat = avtomat.zacetni_sklad
 
 let je_sprejemno_stanje avtomat stanje =
   List.mem stanje avtomat.sprejemna_stanja
 
-(* let enke_1mod3 =
+let enke_1mod3 =
   let q0 = Stanje.iz_niza "q0"
   and q1 = Stanje.iz_niza "q1"
   and q2 = Stanje.iz_niza "q2" in
@@ -91,7 +94,7 @@ let je_sprejemno_stanje avtomat stanje =
   |> dodaj_prehod q2 2 '0' q2 [2]
   |> dodaj_prehod q0 2 '1' q1 [2]
   |> dodaj_prehod q1 2 '1' q2 [2]
-  |> dodaj_prehod q2 2 '1' q0 [2] *)
+  |> dodaj_prehod q2 2 '1' q0 [2]
 
 let dpda_enako_stevilo_nicel_in_enk =
   let q1 = Stanje.iz_niza "q1"
