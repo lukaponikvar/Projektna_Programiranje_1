@@ -83,6 +83,8 @@ let enke_1mod3 =
   |> dodaj_prehod q0 2 '1' q1 [2]
   |> dodaj_prehod q1 2 '1' q2 [2]
   |> dodaj_prehod q2 2 '1' q0 [2]
+
+  (* dodaj moznost zacetnega stanje ki je sprejemno *)
 let dpda_enako_stevilo_nicel_in_enk =
   let q1 = Stanje.iz_niza "q1"
   and q2 = Stanje.iz_niza "q2"
@@ -115,14 +117,17 @@ let npda_enako_stevilo_nicel_kot_enk_ali_dvojk =
   |> dodaj_prehod q1 0 '0' q1 [0; 0]
   |> dodaj_prehod q1 0 '1' q2 []
   |> dodaj_prehod q2 0 '1' q2 []
-  |> dodaj_prazen_prehod q2 3 q3 [3]
   |> dodaj_prehod q2 3 '2' q3 [3]
   |> dodaj_prehod q3 3 '2' q3 [3]
   |> dodaj_prehod q1 0 '1' q4 [0]
   |> dodaj_prehod q4 0 '1' q4 [0]
+  |> dodaj_prehod q4 3 '1' q4 [3]
   |> dodaj_prehod q4 0 '2' q5 []
   |> dodaj_prehod q5 0 '2' q5 []
-  |> dodaj_prehod q1 0 '2' q5 []
+  |> dodaj_prazen_prehod q1 3 q2 [3]
+  |> dodaj_prazen_prehod q2 3 q3 [3]
+  |> dodaj_prazen_prehod q1 3 q4 [3]
+  |> dodaj_prazen_prehod q4 3 q5 [3]
   |> dodaj_prazen_prehod q5 3 q6 [3]
 
 

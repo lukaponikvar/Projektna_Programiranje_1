@@ -18,7 +18,7 @@ Formalno gledano je nedeterminističen skladovni avtomat definiran kot nabor (7-
 - $Q$ končna množica stanj,
 - $\Sigma$ končna množica simbolov imenovana abeceda vnosov (input alphabet),
 - $\Gamma$ končna množica simbolov imenovana sbeceda sklada (stack alphabet),
-- $\delta : Q \times (\Sigma \cup \{\varepsilon\}) \times \Gamma \to \mathscr{P}(Q \times \Gamma^{*})$ prehodna funkcija,
+- $\delta : Q \times \Gamma \times (\Sigma \cup \{\varepsilon\}) \to \mathscr{P}(Q \times \Gamma^{*})$ prehodna funkcija,
 - $q_0 \in Q$ začetno stanje (start state),
 - $Z_0$ $\in \Gamma$ začetni simbol na skladu (initial stack symbol),
 - $F \subseteq Q$ množica sprejemnih stanj (accepting states or final states).
@@ -28,7 +28,7 @@ Opombe:
 - $\Gamma$ in $\Sigma$ nista nujno disjunktni množici, a tega nič ne preprečuje,
 - $\varepsilon$ označuje prazen niz,
 - $\Gamma^{*}$ predstavlja množico vseh končnih nizov iz črk abeceda sklada,
-- $\delta$ bi lahko predstavljala tudi podmnožico $Q \times (\Sigma \cup \{\varepsilon\}) \times \Gamma \times (Q \times \Gamma^{*})$ ,
+- $\delta$ bi lahko predstavljala tudi podmnožico $Q \times \Gamma \times (\Sigma \cup \{\varepsilon\}) \times (Q \times \Gamma^{*})$ ,
 - Prehodna funkcija ni nujno enolična.
 
 ## Delovanje
@@ -37,17 +37,17 @@ Označimo naš PDA z $M$.
 
 Denimo, da je $M$ v stanju $p$, na vrhu sklada naj bo $A \in \Gamma$. Če je $a$ prebrani simbol se lahko zgodi ena od naslednjih reči:
 
-- Če je $\delta(p,a,A) \neq \emptyset$ potem $M$ za $(q, A_{1}A_{2}\ldots A_{n}) \in \delta(p,a,A)$
-    - vzame $A$ dol s sklada
-    - da $A_{1}A_{2}\ldots A_{n}$ na sklad, začenši z $A_n$
-    - vstopi v stanje $q$
-    - se premakne naprej po vnesenem nizu
-- Če je $\delta(p,a,A) = \emptyset$ potem $M$ ne naredi ničesar
-- Če je $\delta(p,\varepsilon,A) \neq \emptyset$ potem $M$, brez prebiranja $a$,
-    - vzame $A$ dol s sklada
-    - da $A_{1}A_{2}\ldots A_{n}$ na sklad, začenši z $A_n$
-    - vstopi v stanje $q$
-- Če je $\delta(p,\varepsilon,A) = \emptyset$ potem $M$ ne naredi ničesar
+- Če je $\delta(p, A, a) \neq \emptyset$ potem $M$ za $(q, A_{1}A_{2}\ldots A_{n}) \in \delta(p, A, a)$
+    - vzame $A$ dol s sklada,
+    - da $A_{1}A_{2}\ldots A_{n}$ na sklad, začenši z $A_n$,
+    - vstopi v stanje $q$,
+    - se premakne naprej po vnesenem nizu.
+- Če je $\delta(p, A, a) = \emptyset$ potem $M$ ne naredi ničesar.
+- Če je $\delta(p,A ,\varepsilon) \neq \emptyset$ potem $M$, brez prebiranja $a$,
+    - vzame $A$ dol s sklada,
+    - da $A_{1}A_{2}\ldots A_{n}$ na sklad, začenši z $A_n$,
+    - vstopi v stanje $q$.
+- Če je $\delta(p,A ,\varepsilon) = \emptyset$ potem $M$ ne naredi ničesar.
 
 V primeru ko je $A_{1}A_{2}\ldots A_{n}$ enako $\varepsilon$ se $A$ odstrani iz sklada in se na sklad ne da ničesar. Pozoren bralec je uvidel, da v primeru praznega sklada ne moremo spremeniti stanja. 
 
@@ -56,9 +56,9 @@ V primeru ko je $A_{1}A_{2}\ldots A_{n}$ enako $\varepsilon$ se $A$ odstrani iz 
 
 Obstajata dva ekvivalentna načina sprejemanja za nedeterministične skladovne avtomate.
 
-Prvi način je sprejemanje glede na končno stanje. Niz $w$ je sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do enega izmed sprejemnih stanj, pri čemer se ne ozremo na končno stanje sklada (ta je lahko prazen ali pa ne). Ta način bo uporabljen v zgledih.
+Prvi način je $\bf {\text {sprejemanje glede na končno stanje}}$. Niz $w$ je sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do enega izmed sprejemnih stanj, pri čemer se ne ozremo na končno stanje sklada (ta je lahko prazen ali pa ne). Ta način bo uporabljen v zgledih.
 
-Drugi način je sprejemanje s praznim skladom. Tu je niz $w$ sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do katerega koli stanja, a je po končanem branju sklad prezen. Taki avtomati tudi ne potrebujejo $F$ v definiciji.
+Drugi način je $\bf {\text {sprejemanje s praznim skladom}}$. Tu je niz $w$ sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do katerega koli stanja, a je po končanem branju sklad prezen. Taki avtomati tudi ne potrebujejo $F$ v definiciji.
 
 Naj bo $P$ = $(Q, \Sigma, \Gamma,\delta, q_0, Z_0, F )$. Označimo z $L(M)$ vse nize, ki jih $P$ sprejme glede na končno stanje in z $N(P)$ množico nizov, ki jih $P$ sprejme glede na prazen sklad.
 
@@ -97,44 +97,44 @@ Naj bo $M_1 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
 
 |$\delta$|
 |----|
-|$(q_1, 0, {\$}) \to (q_2, 0{\$})$|
+|$(q_1, {\$}, 0) \to (q_2, {\$}0)$|
 |$(q_2, 0, 0) \to (q_2, 00)$|
-|$(q_2, 1, 0) \to (q_3, \varepsilon)$|
-|$(q_3, 1, 0) \to (q_3, \varepsilon)$|
-|$(q_3, 1, {\$}) \to (q_4, \varepsilon)$|
+|$(q_2, 0, 1) \to (q_3, \varepsilon)$|
+|$(q_3, 0, 1) \to (q_3, \varepsilon)$|
+|$(q_3, {\$}, \varepsilon) \to (q_4, {\$})$|
 
 <!-- Sipser 113 -->
 
 ## Zgled 2
 
-Drugi primer, pa je jezik, ki ga ne sprejme noben DPDA, ga pa sprejme naslednji NDPA.
+Drugi primer, pa je jezik, ki ga ne sprejme noben DPDA, ga pa sprejme sledeči NPDA.
 Sestavili bomo avtomat, ki sprejme jezik $\{a^{i}b^{j}c^{k} | i=j \text{  ali  } i=k\}$.
 
 Naj bo $M_2 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
 
-- $Q=\{q_1, q_2, q_3, q_4, q_5, q_6, q_7\},$
+- $Q=\{q_1, q_2, q_3, q_4, q_5, q_6\},$
 - $\Sigma = \{a, b, c\},$
 - $\Gamma = \{a,b,\$\},$
-- $F = \{q_4, q_7\}$,
+- $F = \{q_3, q_6\}$,
 
 |$\delta$|
 |----|
-|$(q_1, \varepsilon, {\$}) \to (q_2,{\$})$|
-|$(q_2, a, {\$}) \to (q_2, a{\$})$|
-|$(q_2, a, a) \to (q_2, aa)$|
-|$(q_2, \varepsilon, a) \to (q_3, a)$|
-|$(q_2, \varepsilon, {\$}) \to (q_3, {\$})$|
-|$(q_3, b, a) \to (q_3, \varepsilon)$|
-|$(q_3, \varepsilon, {\$}) \to (q_4, {\$})$|
-|$(q_4, c, {\$}) \to (q_4, {\$})$|
-|$(q_2, \varepsilon, a) \to (q_5, a)$|
-|$(q_2, \varepsilon, {\$}) \to (q_5, {\$})$|
-|$(q_5, b, a) \to (q_5, a)$|
-|$(q_5, b, {\$}) \to (q_5,{\$})$|
-|$(q_5, \varepsilon, a) \to (q_6, a)$|
-|$(q_5, \varepsilon, {\$}) \to (q_6, {\$})$|
-|$(q_6, c, a) \to (q_6, \varepsilon)$|
-|$(q_6, \varepsilon, {\$}) \to (q_7, {\$})$|
+|$(q_1, {\$}, a) \to (q_1, {\$}a)$|
+|$(q_1, a, a) \to (q_1, aa)$|
+|$(q_1, a, b) \to (q_2, \varepsilon)$|
+|$(q_2, a, b) \to (q_2, \varepsilon)$|
+|$(q_2, {\$}, c) \to (q_3, {\$})$|
+|$(q_3, {\$}, c) \to (q_3, {\$})$|
+|$(q_1, a, b) \to (q_4, a)$|
+|$(q_4, a, b) \to (q_4, a)$|
+|$(q_4, {\$}, b) \to (q_4,{\$})$|
+|$(q_4, a, c) \to (q_5, \varepsilon)$|
+|$(q_5, a, c) \to (q_5, \varepsilon)$|
+|$(q_1, {\$}, \varepsilon) \to (q_2, {\$})$|
+|$(q_2, {\$}, \varepsilon) \to (q_3, {\$})$|
+|$(q_1, {\$}, \varepsilon) \to (q_4, {\$})$|
+|$(q_4, {\$}, \varepsilon) \to (q_5, {\$})$|
+|$(q_5, {\$}, \varepsilon) \to (q_6, {\$})$|
 
 <!-- Sipser 114 -->
 
