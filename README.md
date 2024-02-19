@@ -138,7 +138,13 @@ Naj bo $M_2 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
 
 <!-- Sipser 114 -->
 
+## Navodila za uporabo
+
+Tekstovni vmesnik lahko prevedete tako, da v ukazno vrstico napišete ukaz `dune build`, ki zgradi datoteko tekstovniVmesnik.exe, in nato poženete še ukaz `.\tekstovniVmesnik.exe`, ki dotično datoteko požene. 
+
 ## Struktura datotek
+
+
 
 
 
