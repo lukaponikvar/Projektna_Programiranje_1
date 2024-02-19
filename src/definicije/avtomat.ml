@@ -9,9 +9,10 @@ type t = {
   prazni_prehodi : ( stanje * int * stanje * int list ) list;
   sklad : sklad;
   zacetni_sklad: sklad;
+  opis : string;
 }
 
-let prazen_avtomat zacetno_stanje sklad =
+let prazen_avtomat zacetno_stanje sklad opis =
   {
     stanja = [ zacetno_stanje ];
     zacetno_stanje;
@@ -20,6 +21,7 @@ let prazen_avtomat zacetno_stanje sklad =
     prazni_prehodi = [];
     sklad = sklad;
     zacetni_sklad = sklad;
+    opis = opis;
   }
 
 let dodaj_nesprejemno_stanje stanje avtomat =
@@ -66,6 +68,7 @@ let seznam_prehodov avtomat = avtomat.prehodi
 let seznam_praznih_prehodov avtomat = avtomat.prazni_prehodi
 let sklad avtomat = avtomat.sklad
 let zacetni_sklad avtomat = avtomat.zacetni_sklad
+let opis avtomat = avtomat.opis
 
 let je_sprejemno_stanje avtomat stanje =
   List.mem stanje avtomat.sprejemna_stanja
@@ -74,7 +77,7 @@ let enke_1mod3 =
   let q0 = Stanje.iz_niza "q0"
   and q1 = Stanje.iz_niza "q1"
   and q2 = Stanje.iz_niza "q2" in
-  prazen_avtomat q0 (Sklad.nov_sklad 2)
+  prazen_avtomat q0 (Sklad.nov_sklad 2) ""
   |> dodaj_sprejemno_stanje q1
   |> dodaj_nesprejemno_stanje q2
   |> dodaj_prehod q0 2 '0' q0 [2]
@@ -90,7 +93,7 @@ let dpda_enako_stevilo_nicel_in_enk =
   and q2 = Stanje.iz_niza "q2"
   and q3 = Stanje.iz_niza "q3" 
   and q4 = Stanje.iz_niza "q4" in
-  prazen_avtomat q1 (Sklad.nov_sklad 2)
+  prazen_avtomat q1 (Sklad.nov_sklad 2) ""
   |> dodaj_nesprejemno_stanje q2
   |> dodaj_nesprejemno_stanje q3
   |> dodaj_sprejemno_stanje q4
@@ -107,7 +110,9 @@ let npda_enako_stevilo_nicel_kot_enk_ali_dvojk =
   and q4 = Stanje.iz_niza "q4"
   and q5 = Stanje.iz_niza "q5" 
   and q6 = Stanje.iz_niza "q6" in
-  prazen_avtomat q1 (Sklad.nov_sklad 3)
+  let opis = "Avtomat preveri ali v danem nizu iz ničel, enk in dvojk, v danem vrstnem redu, velja enakost med številom 
+  ničel in dvojk ali pa med številom ničel in enic." in
+  prazen_avtomat q1 (Sklad.nov_sklad 3) opis
   |> dodaj_nesprejemno_stanje q2
   |> dodaj_sprejemno_stanje q3
   |> dodaj_nesprejemno_stanje q4

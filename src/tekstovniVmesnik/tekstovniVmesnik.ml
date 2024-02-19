@@ -4,6 +4,7 @@ open Avtomat
 type stanje_vmesnika =
   | SeznamMoznosti
   | IzpisAvtomata
+  | OpisAvtomata
   | BranjeNiza
   | RezultatPrebranegaNiza
   | OpozoriloONapacnemNizu
@@ -42,12 +43,14 @@ let update model = function
       else { model with stanje_vmesnika }
 
 let rec izpisi_moznosti () =
-  print_endline "1) izpiši avtomat";
-  print_endline "2) preberi niz";
+  print_endline "1) Izpiši avtomat";
+  print_endline "2) Opis avtomata";
+  print_endline "3) Preveri niz";
   print_string "> ";
   match read_line () with
   | "1" -> ZamenjajVmesnik IzpisAvtomata
-  | "2" -> ZamenjajVmesnik BranjeNiza
+  | "2" -> ZamenjajVmesnik OpisAvtomata
+  | "3" -> ZamenjajVmesnik BranjeNiza
   | _ ->
       print_endline "** VNESI 1 ALI 2 **";
       izpisi_moznosti ()
@@ -63,9 +66,12 @@ let izpisi_avtomat avtomat =
     in
     print_endline prikaz
   in
-  print_endline "Avtomat ima naslednjo strukturo:\n- Začetno stanje: ->\n- Sprejemno stanje: + \n___________";
+  print_endline "Avtomat ima naslednjo strukturo:\n- Začetno stanje: ->\n- Sprejemna stanja: + \n___________";
   List.iter izpisi_stanje (List.rev (seznam_stanj avtomat));
   print_endline "___________\n "
+
+let opisi_avtomat avtomat = 
+  print_endline (opis avtomat)
 
 let beri_niz _model =
   print_string "Vnesi niz > ";
@@ -83,6 +89,9 @@ let view model =
   | IzpisAvtomata ->
       izpisi_avtomat model.avtomat;
       ZamenjajVmesnik SeznamMoznosti
+  |OpisAvtomata ->
+    opisi_avtomat model.avtomat;
+    ZamenjajVmesnik SeznamMoznosti
   | BranjeNiza -> beri_niz model
   | RezultatPrebranegaNiza ->
       izpisi_rezultat model;
