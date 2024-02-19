@@ -144,7 +144,11 @@ Tekstovni vmesnik lahko prevedete tako, da v ukazno vrstico napišete ukaz `dune
 
 ## Struktura datotek
 
+Projekt je sestavljen iz mape `src`, ki vsebuje mapi definicije in tekstovniVmesnik.
 
+Mapa definicije vsebuje ocaml datoteke z implementacijo traku, skladom, stanjem, avtomatom in zagnanim avtomatom.
+
+Mapa tekstovniVmesnik vsebuje implementacijo tekstovnega vmesnika.
 
 
 
