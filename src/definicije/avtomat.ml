@@ -5,8 +5,7 @@ type t = {
   stanja : stanje list;
   zacetno_stanje : stanje;
   sprejemna_stanja : stanje list;
-  prehodi : (( stanje * int * char * stanje * int list ) list *
-            ( stanje * int * stanje * int list ) list);
+  prehodi : (( stanje * int * char * stanje * int list ) list * ( stanje * int * stanje * int list ) list);
   sklad : sklad;
   zacetni_sklad: sklad;
   opis : string;
