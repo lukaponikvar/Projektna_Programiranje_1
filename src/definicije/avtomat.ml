@@ -9,7 +9,7 @@ type t = {
   sklad : sklad;
   zacetni_sklad: sklad;
   opis : string;
-}
+  }
 
 let prazen_avtomat zacetno_stanje sklad opis =
   {
