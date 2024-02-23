@@ -14,4 +14,4 @@ val zacetni_sklad : t -> Sklad.t
 val opis : t -> string
 val je_sprejemno_stanje : t -> Stanje.t -> bool
 val npda_enako_stevilo_nicel_kot_enk_ali_dvojk : t
-val preberi_niz : t -> Stanje.t -> Sklad.t -> string -> (Stanje.t * Sklad.t) list
+

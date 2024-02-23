@@ -19,28 +19,40 @@ type model = {
 
 type msg = PreberiNiz of string | ZamenjajVmesnik of stanje_vmesnika
 
+let preberi_niz avtomat zacetno_stanje zacetni_sklad niz =
+  let rec brez_znaka acc list =  
+    match list with
+      | [] -> acc
+      | sez -> brez_znaka (acc @ list) (List.flatten (List.map (prazna_prehodna_funkcija avtomat) sez)) in
+  let z_znakom seznam znak = 
+    List.flatten (List.map (prehodna_funkcija avtomat znak) (brez_znaka [] seznam)) in
+  brez_znaka [] (niz |> String.to_seq |> Seq.fold_left z_znakom [(zacetno_stanje, zacetni_sklad)])
+
+
 let update model = function
   | PreberiNiz str ->
-     (let seznam = Avtomat.preberi_niz model.avtomat model.stanje_avtomata model.stanje_sklada str in
-     let seznamcek = List.filter (fun (stanje', _) -> (je_sprejemno_stanje model.avtomat stanje')) seznam in
-      match (seznam, seznamcek) with
-      | [], _ -> { model with stanje_vmesnika = OpozoriloONapacnemNizu }
-      | ((stanje_avtomata, stanje_sklada) :: _, []) ->
-          {
+     (let seznam = preberi_niz model.avtomat model.stanje_avtomata model.stanje_sklada str in
+     let seznam_dobrih = List.filter (fun (stanje', _) -> (je_sprejemno_stanje model.avtomat stanje')) seznam in
+     let spremeni_avtomat = function
+      | [], _ -> None
+      | ((stanje_avtomata, stanje_sklada) :: _, []) -> Some (stanje_avtomata, stanje_sklada)
+      | (_, (stanje_avtomata, stanje_sklada) :: _) -> Some (stanje_avtomata, stanje_sklada) in
+     match spremeni_avtomat (seznam, seznam_dobrih) with
+      | None -> { model with stanje_vmesnika = OpozoriloONapacnemNizu }
+      | Some (stanje_avtomata, stanje_sklada) -> 
+        {
             model with
             stanje_avtomata;
             stanje_sklada;
             stanje_vmesnika = RezultatPrebranegaNiza;
-          }
-      | (_, (stanje_avtomata, stanje_sklada) :: _) -> 
-            {
-            model with
-            stanje_avtomata;
-            stanje_sklada;
-            stanje_vmesnika = RezultatPrebranegaNiza;
-          })
-  | ZamenjajVmesnik stanje_vmesnika -> if stanje_vmesnika = VrniVIzhodiscnoStanje then { avtomat = model.avtomat; stanje_avtomata = zacetno_stanje model.avtomat; stanje_sklada = zacetni_sklad model.avtomat; stanje_vmesnika }
-      else { model with stanje_vmesnika }
+        })
+  | ZamenjajVmesnik stanje_vmesnika -> if stanje_vmesnika = VrniVIzhodiscnoStanje 
+    then { avtomat = model.avtomat; 
+           stanje_avtomata = zacetno_stanje model.avtomat;
+           stanje_sklada = zacetni_sklad model.avtomat; 
+           stanje_vmesnika 
+         }
+    else { model with stanje_vmesnika }
 
 let rec izpisi_moznosti () =
   print_endline "1) Izpiši avtomat";
@@ -52,7 +64,7 @@ let rec izpisi_moznosti () =
   | "2" -> ZamenjajVmesnik OpisAvtomata
   | "3" -> ZamenjajVmesnik BranjeNiza
   | _ ->
-      print_endline "** VNESI 1 ALI 2 **";
+      print_endline "** VNESI 1, 2 ALI 3 **";
       izpisi_moznosti ()
 
 let izpisi_avtomat avtomat =

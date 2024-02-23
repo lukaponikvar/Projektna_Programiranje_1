@@ -104,11 +104,3 @@ let npda_enako_stevilo_nicel_kot_enk_ali_dvojk =
   |> dodaj_prazen_prehod q5 3 q6 [3]
 
 
-let preberi_niz avtomat zacetno_stanje zacetni_sklad niz =
-  let rec brez_znaka acc list =  
-    match list with
-      | [] -> acc
-      | sez -> brez_znaka (acc @ list) (List.flatten (List.map (prazna_prehodna_funkcija avtomat) sez)) in
-  let z_znakom seznam znak = 
-    List.flatten (List.map (prehodna_funkcija avtomat znak) (brez_znaka [] seznam)) in
-  brez_znaka [] (niz |> String.to_seq |> Seq.fold_left z_znakom [(zacetno_stanje, zacetni_sklad)])
