@@ -129,6 +129,7 @@ Naj bo $M_2 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
 |$(q_2, {\$}, c) \to (q_3, {\$})$|
 |$(q_3, {\$}, c) \to (q_3, {\$})$|
 |$(q_1, a, b) \to (q_4, a)$|
+|$(q_1, a, c) \to (q_, \varepsilon)$|
 |$(q_4, a, b) \to (q_4, a)$|
 |$(q_4, {\$}, b) \to (q_4,{\$})$|
 |$(q_4, a, c) \to (q_5, \varepsilon)$|
