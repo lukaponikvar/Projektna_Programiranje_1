@@ -5,8 +5,8 @@ type t = {
   stanja : stanje list;
   zacetno_stanje : stanje;
   sprejemna_stanja : stanje list;
-  prehodi : ( stanje * int * char * stanje * int list ) list;
-  prazni_prehodi : ( stanje * int * stanje * int list ) list;
+  prehodi : (( stanje * int * char * stanje * int list ) list *
+            ( stanje * int * stanje * int list ) list);
   sklad : sklad;
   zacetni_sklad: sklad;
   opis : string;
@@ -17,8 +17,7 @@ let prazen_avtomat zacetno_stanje sklad opis =
     stanja = [ zacetno_stanje ];
     zacetno_stanje;
     sprejemna_stanja = [];
-    prehodi = [];
-    prazni_prehodi = [];
+    prehodi = ([], []);
     sklad = sklad;
     zacetni_sklad = sklad;
     opis = opis;
@@ -35,10 +34,10 @@ let dodaj_sprejemno_stanje stanje avtomat =
   }
 
 let dodaj_prehod stanje1 znak_na_skladu1 znak stanje2 (znaki_na_skladu2 : int list) avtomat =
-  { avtomat with prehodi = (stanje1, znak_na_skladu1, znak, stanje2, znaki_na_skladu2) :: avtomat.prehodi }
+  { avtomat with prehodi = ((stanje1, znak_na_skladu1, znak, stanje2, znaki_na_skladu2) :: (fst avtomat.prehodi), snd avtomat.prehodi) }
 
 let dodaj_prazen_prehod stanje1 znak_na_skladu1 stanje2 (znaki_na_skladu2 : int list) avtomat =
-  { avtomat with prazni_prehodi = (stanje1, znak_na_skladu1, stanje2, znaki_na_skladu2) :: avtomat.prazni_prehodi }
+  { avtomat with prehodi = (fst avtomat.prehodi, (stanje1, znak_na_skladu1, stanje2, znaki_na_skladu2) :: (snd avtomat.prehodi)) }
 
 let prehodna_funkcija avtomat znak (stanje, sklad) =
   let znak_na_skladu = Option.get (Sklad.trenutni_znak sklad) in
@@ -48,7 +47,7 @@ let prehodna_funkcija avtomat znak (stanje, sklad) =
   pomozna [] (
     List.filter
     (fun (stanje1, znak_na_skladu1, znak', _stanje2, _znaki_na_skladu2) -> stanje1 = stanje && znak = znak' && znak_na_skladu1 = znak_na_skladu)
-    avtomat.prehodi
+    (fst avtomat.prehodi)
   )
 
 let prazna_prehodna_funkcija avtomat (stanje, sklad) =
@@ -59,7 +58,7 @@ let prazna_prehodna_funkcija avtomat (stanje, sklad) =
   pomozna [] (
     List.filter
     (fun (stanje1, znak_na_skladu1, _stanje2, _znaki_na_skladu2) -> stanje1 = stanje && znak_na_skladu1 = znak_na_skladu)
-    avtomat.prazni_prehodi
+    (snd avtomat.prehodi)
   )
 
 let zacetno_stanje avtomat = avtomat.zacetno_stanje
@@ -93,6 +92,7 @@ let npda_enako_stevilo_nicel_kot_enk_ali_dvojk =
   |> dodaj_prehod q2 3 '2' q3 [3]
   |> dodaj_prehod q3 3 '2' q3 [3]
   |> dodaj_prehod q1 0 '1' q4 [0]
+  |> dodaj_prehod q1 0 '2' q5 []
   |> dodaj_prehod q4 0 '1' q4 [0]
   |> dodaj_prehod q4 3 '1' q4 [3]
   |> dodaj_prehod q4 0 '2' q5 []
