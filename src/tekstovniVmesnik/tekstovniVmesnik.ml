@@ -28,7 +28,6 @@ let preberi_niz avtomat zacetno_stanje zacetni_sklad niz =
     List.flatten (List.map (prehodna_funkcija avtomat znak) (brez_znaka [] seznam)) in
   brez_znaka [] (niz |> String.to_seq |> Seq.fold_left z_znakom [(zacetno_stanje, zacetni_sklad)])
 
-
 let update model = function
   | PreberiNiz str ->
      (let seznam = preberi_niz model.avtomat model.stanje_avtomata model.stanje_sklada str in

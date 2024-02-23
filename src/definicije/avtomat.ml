@@ -65,7 +65,6 @@ let seznam_stanj avtomat = avtomat.stanja
 let sklad avtomat = avtomat.sklad
 let zacetni_sklad avtomat = avtomat.zacetni_sklad
 let opis avtomat = avtomat.opis
-
 let je_sprejemno_stanje avtomat stanje =
   List.mem stanje avtomat.sprejemna_stanja
 
@@ -101,5 +100,3 @@ let npda_enako_stevilo_nicel_kot_enk_ali_dvojk =
   |> dodaj_prazen_prehod q1 3 q4 [3]
   |> dodaj_prazen_prehod q4 3 q5 [3]
   |> dodaj_prazen_prehod q5 3 q6 [3]
-
-
