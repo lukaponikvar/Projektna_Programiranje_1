@@ -42,12 +42,12 @@ Denimo, da je $M$ v stanju $p$, na vrhu sklada naj bo $A \in \Gamma$. Če je $a$
     - da $A_{1}A_{2}\ldots A_{n}$ na sklad, začenši z $A_n$,
     - vstopi v stanje $q$,
     - se premakne naprej po vnesenem nizu.
-- Če je $\delta(p, A, a) = \emptyset$ potem $M$ ne naredi ničesar.
+- Če je $\delta(p, A, a) = \emptyset$ potem $M$ sporoči, da je niz neveljaven.
 - Če je $\delta(p,A ,\varepsilon) \neq \emptyset$ potem $M$, brez prebiranja $a$,
     - vzame $A$ dol s sklada,
     - da $A_{1}A_{2}\ldots A_{n}$ na sklad, začenši z $A_n$,
     - vstopi v stanje $q$.
-- Če je $\delta(p,A ,\varepsilon) = \emptyset$ potem $M$ ne naredi ničesar.
+- Če je $\delta(p,A ,\varepsilon) = \emptyset$ potem $M$ sporoči, da je niz neveljaven.
 
 V primeru ko je $A_{1}A_{2}\ldots A_{n}$ enako $\varepsilon$ se $A$ odstrani iz sklada in se na sklad ne da ničesar. Pozoren bralec je uvidel, da v primeru praznega sklada ne moremo spremeniti stanja. 
 
@@ -56,9 +56,9 @@ V primeru ko je $A_{1}A_{2}\ldots A_{n}$ enako $\varepsilon$ se $A$ odstrani iz 
 
 Obstajata dva ekvivalentna načina sprejemanja za nedeterministične skladovne avtomate.
 
-Prvi način je $\bf {\text {sprejemanje glede na končno stanje}}$. Niz $w$ je sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do enega izmed sprejemnih stanj, pri čemer se ne ozremo na končno stanje sklada (ta je lahko prazen ali pa ne). Ta način bo uporabljen v zgledih.
+Prvi način je `sprejemanje glede na končno stanje`. Niz $w$ je sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do enega izmed sprejemnih stanj, pri čemer se ne ozremo na končno stanje sklada (ta je lahko prazen ali pa ne). Ta način bo uporabljen v zgledih.
 
-Drugi način je $\bf {\text {sprejemanje s praznim skladom}}$. Tu je niz $w$ sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do katerega koli stanja, a je po končanem branju sklad prezen. Taki avtomati tudi ne potrebujejo $F$ v definiciji.
+Drugi način je `sprejemanje s praznim skladom`. Tu je niz $w$ sprejet, če obstaja zaporedje korakov branja niza, da preidemo iz začetnega stanja do katerega koli stanja, a je po končanem branju sklad prezen. Taki avtomati tudi ne potrebujejo $F$ v definiciji.
 
 Naj bo $P$ = $(Q, \Sigma, \Gamma,\delta, q_0, Z_0, F )$. Označimo z $L(M)$ vse nize, ki jih $P$ sprejme glede na končno stanje in z $N(P)$ množico nizov, ki jih $P$ sprejme glede na prazen sklad.
 
@@ -149,9 +149,9 @@ Tekstovni vmesnik lahko prevedete tako, da v ukazno vrstico napišete ukaz `dune
 
 Projekt je sestavljen iz mape `src`, ki vsebuje mapi definicije in tekstovniVmesnik.
 
-Mapa definicije vsebuje ocaml datoteke z implementacijo traku, sklada, stanja in avtomata.
+Mapa `definicije` vsebuje ocaml datoteke z implementacijo traku, sklada, stanja in avtomata.
 
-Mapa tekstovniVmesnik vsebuje implementacijo tekstovnega vmesnika.
+Mapa `tekstovniVmesnik` vsebuje implementacijo tekstovnega vmesnika.
 
 
 
