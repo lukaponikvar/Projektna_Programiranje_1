@@ -117,6 +117,9 @@ Naj bo $M_2 = \left( Q, \Sigma, \Gamma, \delta, q_1, \$, F \right)$, kjer so
 - $\Gamma = \{a,b,\$\},$
 - $F = \{q_3, q_6\}$,
 
+`!Na spletni strani se spodnja tabela ne izpiše vredu!`
+
+`!Glej na VSCode!`
 |$\delta$|
 |----|
 |$(q_1, {\$}, a) \to (q_1, {\$}a)$|
@@ -146,7 +149,7 @@ Tekstovni vmesnik lahko prevedete tako, da v ukazno vrstico napišete ukaz `dune
 
 Projekt je sestavljen iz mape `src`, ki vsebuje mapi definicije in tekstovniVmesnik.
 
-Mapa definicije vsebuje ocaml datoteke z implementacijo traku, skladom, stanjem, avtomatom in zagnanim avtomatom.
+Mapa definicije vsebuje ocaml datoteke z implementacijo traku, sklada, stanja in avtomata.
 
 Mapa tekstovniVmesnik vsebuje implementacijo tekstovnega vmesnika.
 
