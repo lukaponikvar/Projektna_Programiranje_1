@@ -1,4 +1,4 @@
-type t = Prazen | Sestavljen of int * t
+type 'a t = Prazen | Sestavljen of 'a * 'a t
 
 let nov_sklad stevilo = Sestavljen (stevilo, Prazen)
 

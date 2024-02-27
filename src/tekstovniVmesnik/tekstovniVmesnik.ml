@@ -13,7 +13,7 @@ type stanje_vmesnika =
 type model = {
   avtomat : Avtomat.t;
   stanje_avtomata : Stanje.t;
-  stanje_sklada : Sklad.t;
+  stanje_sklada : int Sklad.t;
   stanje_vmesnika : stanje_vmesnika;
 }
 
